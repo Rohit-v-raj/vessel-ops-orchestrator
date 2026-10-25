@@ -5,16 +5,6 @@ server:
 spring:
   application:
     name: vessel-ops-orchestrator
-  datasource:
-    # Only the simulated terminal systems keep data here. The visits themselves
-    # live in Temporal's event history, not in our database.
-    url: jdbc:h2:file:./data/ops
-    username: sa
-    password: ""
-  jpa:
-    hibernate:
-      ddl-auto: update
-    open-in-view: false
   temporal:
     namespace: default
     connection:
@@ -24,3 +14,26 @@ spring:
     workers-auto-discovery:
       packages:
         - com.port.ops
+
+# Override any of these on the command line, for example
+#   gradlew.bat bootRun --args="--ops.sim.breakdown-rate=0.3"
+ops:
+  # 1 real second = 360 terminal seconds (6 minutes), so a 12-hour visit takes 2 minutes.
+  time-scale: 360
+  # Planning figures the workflow uses. The simulated cranes are a little faster or slower.
+  moves-per-hour: 30
+  moves-per-crane: 400
+  max-cranes: 3
+  # Terminal time. The move list is due within 24 hours of the berth being confirmed (4 real minutes).
+  move-list-deadline: 24h
+  # Warn the berth planner when completion is expected this much later than planned.
+  overrun-threshold: 60m
+  # Lashing, paperwork and the pilot between the last move and the departure.
+  departure-after-completion: 1h
+  sim:
+    # Chance that a call to a crane's control system fails and is retried.
+    failure-rate: 0.1
+    # Chance that a crane breaks down while working a bay. Off by default.
+    breakdown-rate: 0.0
+    # How long the crane system takes to answer a reservation.
+    latency: 300ms

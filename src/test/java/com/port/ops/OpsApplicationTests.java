@@ -5,12 +5,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * The whole application starts against the starter's in-memory test server,
- * so the build needs neither Docker nor a running Temporal.
+ * so the build needs neither Docker nor a running Temporal. This checks the
+ * wiring: auto-discovery finds the workflow and activities and builds a
+ * worker for each task queue.
  */
-@SpringBootTest(properties = {
-        "spring.temporal.test-server.enabled=true",
-        "spring.datasource.url=jdbc:h2:mem:ops"
-})
+@SpringBootTest(properties = "spring.temporal.test-server.enabled=true")
 class OpsApplicationTests {
 
     @Test
