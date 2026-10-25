@@ -28,16 +28,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // Creates the WorkflowClient and the workers, and registers every
     // @WorkflowImpl / @ActivityImpl it finds in the packages we name.
+    // There is no database: a visit's state lives in Temporal's event history.
     implementation "io.temporal:temporal-spring-boot-starter:${temporalVersion}"
-
-    // Storage for the simulated crane, labour and equipment systems. A file
-    // database, so their bookings outlive a worker crash the way a real
-    // external system's would.
-    runtimeOnly 'com.h2database:h2'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // An in-memory Temporal server with time skipping: tests run a 17-hour

@@ -1,0 +1,64 @@
+{
+  "bays": [
+    {
+      "bay": 2,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 6,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 10,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 14,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 18,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 22,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 26,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 30,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 34,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 38,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 42,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 46,
+      "discharge": 40,
+      "load": 45
+    }
+  ]
+}

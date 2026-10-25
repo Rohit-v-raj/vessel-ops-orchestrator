@@ -1,0 +1,14 @@
+{
+  "bays": [
+    {
+      "bay": 2,
+      "discharge": 40,
+      "load": 45
+    },
+    {
+      "bay": 2,
+      "discharge": 10,
+      "load": 0
+    }
+  ]
+}
