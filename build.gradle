@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.16'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.port'
+version = '0.0.1-SNAPSHOT'
+description = 'Temporal workflows that run a berth assignment at the quay and report back to the berth planner'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    // One version for the SDK, the Spring Boot starter and the test server:
+    // they are released together and mixing them is not supported.
+    set('temporalVersion', '1.40.0')
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Creates the WorkflowClient and the workers, and registers every
+    // @WorkflowImpl / @ActivityImpl it finds in the packages we name.
+    implementation "io.temporal:temporal-spring-boot-starter:${temporalVersion}"
+
+    // Storage for the simulated crane, labour and equipment systems. A file
+    // database, so their bookings outlive a worker crash the way a real
+    // external system's would.
+    runtimeOnly 'com.h2database:h2'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // An in-memory Temporal server with time skipping: tests run a 17-hour
+    // vessel visit in seconds and need no Docker.
+    testImplementation "io.temporal:temporal-testing:${temporalVersion}"
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

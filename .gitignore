@@ -1,0 +1,25 @@
+# Build output
+build/
+.gradle/
+bin/
+
+# H2 files of the simulated terminal systems
+data/
+
+# Local overrides (never committed)
+*.local.properties
+*.local.yml
+application-local.yml
+
+# Private working notes for Claude Code
+CLAUDE.md
+.claude/
+
+# IDE / OS
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Local documentation (not published)
+docs/

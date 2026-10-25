@@ -1,0 +1,26 @@
+server:
+  # 8080 is the berth planner, 8000 the ETA model, 5173 the console.
+  port: 8081
+
+spring:
+  application:
+    name: vessel-ops-orchestrator
+  datasource:
+    # Only the simulated terminal systems keep data here. The visits themselves
+    # live in Temporal's event history, not in our database.
+    url: jdbc:h2:file:./data/ops
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  temporal:
+    namespace: default
+    connection:
+      target: 127.0.0.1:7233
+    # The starter scans these packages for @WorkflowImpl and @ActivityImpl
+    # classes and creates one worker per task queue they name.
+    workers-auto-discovery:
+      packages:
+        - com.port.ops

@@ -1,0 +1,30 @@
+# The Temporal dev server: the same single binary as `temporal server start-dev`,
+# run in a container. It holds the server, an SQLite database and the Web UI.
+#
+#   docker compose up -d      start (gRPC on 7233, Web UI on http://localhost:8233)
+#   docker compose stop       stop, keeping every workflow's history
+#   docker compose down -v    stop and delete the history
+services:
+  temporal:
+    image: temporalio/temporal:1.9.1
+    command:
+      - server
+      - start-dev
+      - --ip
+      - 0.0.0.0
+      # Without a file the dev server keeps history in memory and forgets
+      # every workflow when it stops.
+      - --db-filename
+      - /home/temporal/temporal.db
+    ports:
+      - "7233:7233"
+      - "8233:8233"
+    volumes:
+      # Mounted on the home directory because the image runs as the non-root
+      # user 'temporal': a new volume takes the owner of the directory it is
+      # mounted on, so the server can write its database there.
+      - temporal-data:/home/temporal
+    restart: unless-stopped
+
+volumes:
+  temporal-data:
